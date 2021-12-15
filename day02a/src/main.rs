@@ -1,4 +1,4 @@
-use std::{error::Error, fs};
+use std::fs;
 
 fn main() {
     // create the struct for our location
@@ -20,16 +20,16 @@ enum Update {
 
 /// Parse a string of updates into a vector of updates
 fn parse_update_strs(i: &str) -> Vec<Update> {
-    i.lines().map(|i| str_to_update(i).unwrap()).collect()
+    i.lines().map(str_to_update).collect()
 }
 
 /// Turn a single update string into an Update
-fn str_to_update(i: &str) -> Result<Update, Box<dyn Error>> {
-    match i.split_whitespace().collect::<Vec<_>>()[..] {
-        ["forward", i] => Ok(Update::Forward(i.parse().unwrap())),
-        ["down", i] => Ok(Update::Down(i.parse().unwrap())),
-        ["up", i] => Ok(Update::Up(i.parse().unwrap())),
-        _ => Err("incorrect instruction format".into()),
+fn str_to_update(s: &str) -> Update {
+    match s.split_whitespace().collect::<Vec<_>>()[..] {
+        ["forward", i] => Update::Forward(i.parse().unwrap()),
+        ["down", i] => Update::Down(i.parse().unwrap()),
+        ["up", i] => Update::Up(i.parse().unwrap()),
+        _ => unreachable!(),
     }
 }
 
