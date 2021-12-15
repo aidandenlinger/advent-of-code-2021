@@ -1,4 +1,4 @@
-use std::fs;
+use std::{cmp::Ordering, fs};
 
 fn main() {
     let s = fs::read_to_string("input.txt").unwrap();
@@ -19,7 +19,7 @@ fn string_to_int(s: String) -> u32 {
 }
 
 /// Flip a binary string
-fn flip(s: &String) -> String {
+fn flip(s: &str) -> String {
     s.chars()
         .map(|c| if c == '0' { '1' } else { '0' })
         .collect::<String>()
@@ -32,7 +32,7 @@ fn get_counts(s: &str) -> Vec<Count> {
     for line in s.lines() {
         for (i, c) in line.chars().enumerate() {
             // Init count if needed
-            if let None = counts.get(i) {
+            if counts.get(i).is_none() {
                 counts.push(Count::new())
             }
             if c == '0' {
@@ -68,12 +68,10 @@ impl Count {
     }
 
     fn max(&self) -> char {
-        if self.zero > self.one {
-            '0'
-        } else if self.one > self.zero {
-            '1'
-        } else {
-            unreachable!()
+        match self.zero.cmp(&self.one) {
+            Ordering::Greater => '0',
+            Ordering::Less => '1',
+            Ordering::Equal => unreachable!(),
         }
     }
 }

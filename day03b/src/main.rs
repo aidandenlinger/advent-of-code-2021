@@ -28,7 +28,7 @@ fn get_data(s: &str, oxygen: bool) -> u32 {
 
 /// Get the most/least frequent char at position i
 /// Tiebreakers on most return 1, tiebreakers on least return 0
-fn get_match_char(v: &Vec<&str>, pos: usize, most: bool) -> char {
+fn get_match_char(v: &[&str], pos: usize, most: bool) -> char {
     let count_1: usize = v
         .iter()
         .map(|s| s.chars().nth(pos).unwrap())
@@ -42,12 +42,10 @@ fn get_match_char(v: &Vec<&str>, pos: usize, most: bool) -> char {
         } else {
             '0'
         }
+    } else if count_0 <= count_1 {
+        '0'
     } else {
-        if count_0 <= count_1 {
-            '0'
-        } else {
-            '1'
-        }
+        '1'
     }
 }
 
@@ -75,14 +73,14 @@ mod tests {
     #[test]
     fn oxygen() {
         use super::*;
-        let oxygen = get_data(&S, true);
+        let oxygen = get_data(S, true);
         assert_eq!(23, oxygen);
     }
 
     #[test]
     fn co2() {
         use super::*;
-        let co2 = get_data(&S, false);
+        let co2 = get_data(S, false);
         assert_eq!(10, co2);
     }
 }

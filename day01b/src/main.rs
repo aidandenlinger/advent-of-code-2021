@@ -16,7 +16,7 @@ fn file_to_vec(f: &str) -> Result<Vec<i32>, Box<dyn Error>> {
         .collect::<Vec<i32>>())
 }
 
-fn count_increase(v: &Vec<i32>) -> i32 {
+fn count_increase(v: &[i32]) -> i32 {
     // we want to compare (a[0] + a[1] + a[2]) vs (a[1] + a[2] + a[3])
     // this can be totally simplified down: it shares a[1] and a[2]
     // so really, we just want to compare a[0] vs a[3]

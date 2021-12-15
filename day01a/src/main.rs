@@ -12,7 +12,7 @@ fn file_to_vec(f: &str) -> Result<Vec<i32>, Box<dyn Error>> {
         .collect::<Vec<i32>>())
 }
 
-fn count_increase(v: &Vec<i32>) -> i32 {
+fn count_increase(v: &[i32]) -> i32 {
     v.windows(2)
         .fold(0, |acc, w| if w[1] > w[0] { acc + 1 } else { acc })
 }
