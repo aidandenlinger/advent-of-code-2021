@@ -1,22 +1,14 @@
 use std::{error::Error, fs};
 
 fn main() {
-    println!(
-        "{}",
-        calculate_loc(&fs::read_to_string("input.txt").unwrap()).mult(),
-    )
-}
+    // create the struct for our location
+    let mut l = Location::new();
 
-/// The sample input from the website
-fn _test() {
-    let s = "\
-forward 5
-down 5
-forward 8
-up 3
-down 8
-forward 2";
-    println!("{}", calculate_loc(s).mult());
+    let updates = parse_update_strs(&fs::read_to_string("input.txt").unwrap());
+
+    l.update_vec(updates);
+
+    println!("{}", l.mult())
 }
 
 #[derive(Debug)]
@@ -24,13 +16,6 @@ enum Update {
     Forward(i32),
     Up(i32),
     Down(i32),
-}
-
-/// Calculate the location based off a vector of updates
-fn calculate_loc(u: &str) -> Location {
-    let mut s = Location::new();
-    s.update_vec(parse_update_strs(u));
-    s
 }
 
 /// Parse a string of updates into a vector of updates
@@ -80,5 +65,25 @@ impl Location {
     /// Mult the two locational values together
     fn mult(&self) -> i32 {
         self.horiz * self.vert
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    /// The sample input from the website
+    #[test]
+    fn test_case() {
+        use super::*;
+        let updates = "\
+forward 5
+down 5
+forward 8
+up 3
+down 8
+forward 2";
+
+        let mut l = Location::new();
+        l.update_vec(parse_update_strs(updates));
+        assert_eq!(150, l.mult());
     }
 }
