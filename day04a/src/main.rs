@@ -31,7 +31,9 @@ fn parse_input(s: &str) -> (Vec<i32>, Vec<Board>) {
 fn sum_unmarked(b: &Board) -> i32 {
     b.index
         .iter()
-        .fold(0, |acc, (&n, &i)| if !b.board[i] { acc + n } else { acc })
+        .filter(|(_, &i)| !b.board[i])
+        .map(|(n, _)| n)
+        .sum()
 }
 
 /// Find the board that is completed the fastest.
