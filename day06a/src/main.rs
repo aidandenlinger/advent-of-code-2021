@@ -7,7 +7,7 @@ fn main() {
     let mut fishes = to_vec(include_str!("../input.txt"));
 
     for _ in 0..DAYS {
-        fishes = day_update(fishes);
+        day_update(&mut fishes);
     }
 
     println!("{}", fishes.len());
@@ -19,11 +19,11 @@ fn to_vec(s: &str) -> Vec<i32> {
 }
 
 /// Update the list from one day.
-fn day_update(mut fishes: Vec<i32>) -> Vec<i32> {
+fn day_update(fishes: &mut Vec<i32>) {
     let mut new_fish_count = 0;
 
     // Update current fish
-    for fish in &mut fishes {
+    for fish in fishes.iter_mut() {
         if *fish == BIRTH {
             *fish = POST_BIRTH;
             new_fish_count += 1;
@@ -34,8 +34,6 @@ fn day_update(mut fishes: Vec<i32>) -> Vec<i32> {
 
     // Add new fish
     fishes.append(&mut vec![NEW_FISH; new_fish_count]);
-
-    fishes
 }
 
 #[cfg(test)]
@@ -49,7 +47,7 @@ mod test {
         let mut fishes = to_vec(WEB_EXAMPLE);
 
         for _ in 0..80 {
-            fishes = day_update(fishes);
+            day_update(&mut fishes);
         }
 
         assert_eq!(5934, fishes.len());
