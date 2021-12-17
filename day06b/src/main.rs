@@ -33,12 +33,14 @@ fn day_update(f: &mut [u64; 9]) {
     let birthing = f[BIRTH];
 
     // Move fish from timer i+1 to timer i
-    for i in 0..NUMBER_OF_STAGES - 1 {
-        f[i] = f[i + 1]
-    }
+    f.rotate_left(1);
 
-    f[POST_BIRTH] += birthing; // fish who just birthed go to POST_BIRTH
-    f[NEW_FISH] = birthing; // each fish who birthed add 1 new fish - overwrite it
+    // each fish who birthed add 1 new fish. overwrite - only new fishes can be at stage 8
+    f[NEW_FISH] = birthing;
+
+    // These fish are out of the count since they were rotated out from stage 0,
+    // so we readding them at POST_BIRTH
+    f[POST_BIRTH] += birthing;
 }
 
 #[cfg(test)]
