@@ -2,7 +2,8 @@ fn main() {
     println!("{}", run(include_str!("../input.txt")));
 }
 
-/// Given a grid of dumbo octopuses, determine the number of flashes after NUM_OF_STEPS steps.
+/// Given a grid of dumbo octopuses, determine how many steps are needed to have
+/// all octopi flash at once
 fn run(s: &str) -> u32 {
     let mut g = parse(s);
 
