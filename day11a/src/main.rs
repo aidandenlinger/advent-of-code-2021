@@ -51,6 +51,7 @@ fn step(g: &mut [Vec<u32>]) -> u32 {
     flashes
 }
 
+/// Given a grid, return a list of points that need to flash
 fn gen_flashers(g: &[Vec<u32>]) -> Vec<(usize, usize)> {
     let mut v = Vec::new();
     for x in 0..g[0].len() {
