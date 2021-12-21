@@ -25,7 +25,10 @@ fn run(s: &str) -> String {
     let mut ans = String::new();
 
     for row in grid {
-        writeln!(ans, "{:?}", row).unwrap();
+        for c in row {
+            write!(ans, "{}", c).unwrap();
+        }
+        writeln!(ans).unwrap();
     }
 
     ans
