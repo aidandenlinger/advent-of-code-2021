@@ -15,7 +15,7 @@ fn run(s: &str) -> String {
     let y_size = res.iter().map(|(_, y)| y).max().unwrap() + 1;
     let x_size = res.iter().map(|(x, _)| x).max().unwrap() + 1;
 
-    let mut grid = vec![vec!['.'; x_size.try_into().unwrap()]; y_size.try_into().unwrap()];
+    let mut grid = vec![vec![' '; x_size.try_into().unwrap()]; y_size.try_into().unwrap()];
 
     for p in res {
         let (x, y): (usize, usize) = (p.0.try_into().unwrap(), p.1.try_into().unwrap());
