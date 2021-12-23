@@ -23,8 +23,8 @@ fn dijkstra(g: &[Vec<u32>]) -> u32 {
     let start = (0, 0);
     let end = (g.get(0).unwrap().len() - 1, g.len() - 1);
 
-    let mut dist: HashMap<(usize, usize), u32> = HashMap::from([(start, 0)]);
-    let mut prev: HashMap<(usize, usize), (usize, usize)> = HashMap::new();
+    let mut dist = HashMap::from([(start, 0)]);
+    let mut prev = HashMap::new();
     let mut q = BinaryHeap::from([Reverse(DistEntry {
         dist: 0,
         point: start,
