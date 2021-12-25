@@ -1,7 +1,5 @@
 use std::{cmp::max, ops::RangeInclusive};
 
-const Y_MAX: i32 = 1000;
-
 fn main() {
     println!("{}", run(include_str!("../input.txt")));
 }
@@ -22,20 +20,30 @@ fn run(s: &str) -> usize {
     // y_min: the first point that shoots underneath the target, missing it entirely
     // This only works because we know the y target starting variable is negative,
     // so it can't go back up! Would need y_max like math otherwise
-    let y_min = r.y.start() - 1;
+    let y_min = r.y.start();
 
-    // y_max = tried to be mathematical about this, couldn't find a good way to
-    // KNOW that at some point, every velocity after will fail. yoloing on 1000
-    // i limited x, that's pretty good, but it is very annoying to know that
-    // this isn't PROOF that there isn't a better velocity somewhere out there
-    // I have math blogs to read later
+    // I read math blogs!
+    // We always launch up from y=0. Because physics, we will eventually return
+    // to y=0 with v_y = -v_y_start! (if we go up by 3,2,1,0 then we must come
+    // down with -1, -2, -3, returning to y=0).
+    // Since we will always return to y-0 with velocity -v_y_start, our maximum
+    // value is the lowest point of the target - that means we just hit the
+    // last allowable y value. Any more velocity and we must skip the target
+    // So, since our velocity downwards must be y_start, our max velocity
+    // upwards must be the opposite of y_start, so that we return with y_start
+    let y_max = -r.y.start();
+
     (x_min..x_max)
-        .map(|x| (y_min..Y_MAX).map(|y| r.launch((x, y))).collect::<Vec<_>>())
+        .map(|x| {
+            (*y_min..y_max)
+                .map(|y| r.launch((x, y)))
+                .collect::<Vec<_>>()
+        })
         .collect::<Vec<_>>()
         .iter()
         .flatten()
         .flatten()
-        .count()
+        .count() // just needed to change this and func type to return usize
 }
 
 /// Solve for n such that n is the first int where 1 + 2 + ... + n > x.
