@@ -20,7 +20,7 @@ fn run(s: &str) -> u32 {
     let mut max_mag = 0;
 
     for n1 in list.iter() {
-        for n2 in list.iter().skip_while(|n2| *n2 == n1) {
+        for n2 in list.iter().filter(|&n2| n2 != n1) {
             let curr_mag = n1.clone().add(n2.clone()).magnitude();
 
             max_mag = max(curr_mag, max_mag);
